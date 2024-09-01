@@ -25,16 +25,25 @@ const Home = () => {
       setLoading(true);
 
       const movies = await API.fetchMovies(searchTearm, page);
-      console.log(movies);
+
+      setState((prev) => ({
+        ...movies,
+        results:
+          page > 1 ? [...prev.results, ...movies.results] : [...movies.results],
+      }));
     } catch (error) {
       setError(true);
     }
+
+    setLoading(false);
   };
 
   // Initial Render
   useEffect(() => {
     fetchMovies(1);
-  }, []);   // [] is called dependency array
+  }, []); // [] is called dependency array
+
+  console.log(state);
 
   return (
     <>
